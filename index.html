@@ -1,0 +1,384 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>妹妹，22岁生日快乐 🎂</title>
+<style>
+:root{--cream:#fffaf6;--sakura:#f7a8c0;--rose:#e2779a;--peach:#ffcfb3;--lav:#d8ccff;--ink:#4a3a42;--soft:#8a7480}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:"PingFang SC","SF Pro Rounded","HarmonyOS Sans SC","MiSans","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.locked{overflow:hidden;height:100vh}
+.blob{position:fixed;border-radius:50%;filter:blur(60px);opacity:.35;z-index:-1;will-change:transform}
+#b1{width:60vw;height:60vw;background:var(--sakura);top:-20vw;left:-20vw}
+#b2{width:50vw;height:50vw;background:var(--lav);bottom:-15vw;right:-15vw}
+#b3{width:40vw;height:40vw;background:var(--peach);top:40%;left:60%}
+main{max-width:720px;margin:0 auto;padding:0 22px 20vh}
+/* opening */
+#intro{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--cream);transition:opacity 1.2s}
+#intro.gone{opacity:0;pointer-events:none}
+#glow{position:absolute;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle,#ffd3e1 0%,#ffe9dc 50%,transparent 70%);transform:scale(0);transition:transform 1.6s ease-out}
+#intro.open #glow{transform:scale(90)}
+#giftsvg{width:200px;height:200px;position:relative;cursor:pointer;animation:bob 2.4s ease-in-out infinite}
+#intro.open #giftsvg{animation:none}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-2deg)}}
+.rib{transition:transform 1s ease,opacity 1s}
+#intro.open .ribL{transform:translate(-40px,-30px) rotate(-40deg);opacity:0}
+#intro.open .ribR{transform:translate(40px,-30px) rotate(40deg);opacity:0}
+#intro.open .lidg{transform:translateY(-70px);opacity:0;transition:all 1s .3s}
+#tap{margin-top:22px;color:var(--soft);letter-spacing:2px;animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.35}}
+#wish{position:absolute;text-align:center;opacity:0;transform:scale(.6);transition:all .9s cubic-bezier(.3,1.6,.5,1) .7s}
+#wish h1{font-size:clamp(30px,8vw,52px);font-weight:800;color:var(--rose);line-height:1.3}
+#wish p{margin-top:12px;color:var(--soft)}
+#intro.open #wish{opacity:1;transform:scale(1)}
+#intro.open #tap{opacity:0}
+#mute{position:fixed;top:max(12px,env(safe-area-inset-top));right:12px;z-index:60;width:42px;height:42px;border-radius:50%;border:1px solid #fff;background:rgba(255,255,255,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:18px;display:none;box-shadow:0 4px 16px rgba(226,119,154,.15)}
+/* story */
+.screen{min-height:78vh;display:flex;flex-direction:column;justify-content:center;padding:8vh 0}
+.chap{min-height:90vh;text-align:center}
+.chap .no{font-size:15px;letter-spacing:4px;color:var(--rose);font-weight:700;margin-bottom:12px}
+h1.t{font-size:clamp(30px,7.6vw,50px);font-weight:800;line-height:1.3;text-align:center;background:linear-gradient(120deg,var(--rose),#b58cf0);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:clamp(28px,7vw,46px);font-weight:800;line-height:1.3;letter-spacing:.5px}
+h3{font-size:clamp(22px,5.6vw,32px);font-weight:800;line-height:1.35;color:var(--rose);margin-bottom:18px}
+p,li{font-size:clamp(17px,4.4vw,20px);line-height:1.95;margin-bottom:18px}
+b{color:var(--rose);font-weight:700}
+ol,ul{padding-left:1.3em}
+.glass{background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:26px;padding:22px 20px;box-shadow:0 10px 40px rgba(226,119,154,.10)}
+.glass p:last-child,.glass li:last-child{margin-bottom:0}
+.r{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease}
+.r.in{opacity:1;transform:none}
+.ill{display:flex;justify-content:center;margin:10px 0 26px;will-change:transform}
+.ill svg{width:min(70vw,300px);height:auto}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{padding:10px 8px;border-bottom:1px solid #f4dbe4;text-align:left;line-height:1.6}
+th{color:var(--rose)}
+/* candy cards */
+.candies{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+.candy{border-radius:22px;padding:16px 12px;text-align:center;cursor:pointer;transition:transform .3s;border:1px solid #fff;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.candy:active{transform:scale(.96)}
+.candy .ic{font-size:30px}
+.candy .nm{font-weight:800;margin-top:4px}
+.candy .hint{font-size:12px;color:var(--soft)}
+.candy.on{grid-column:1/-1;text-align:left}
+.candy .bd{max-height:0;overflow:hidden;transition:max-height .6s ease}
+.candy.on .bd{max-height:900px;margin-top:10px}
+.candy.on .hint{display:none}
+.candy .bd p{font-size:16px;margin:0}
+/* basket */
+#basket{cursor:pointer;overflow:visible}
+#basket .fruit{transition:transform .7s cubic-bezier(.3,1.5,.5,1)}
+.tapme{text-align:center;font-size:13px;color:var(--soft);margin-top:-14px;margin-bottom:20px}
+/* trio */
+.trio{display:grid;gap:14px}
+.mascot{display:flex;gap:14px;align-items:center}
+.mascot svg{width:76px;height:76px;flex:none;animation:bob 3s ease-in-out infinite}
+#pigwrap{position:sticky;top:12vh;z-index:2;display:flex;justify-content:center;pointer-events:none}
+.coin{transition:transform .6s cubic-bezier(.5,0,.7,1.4),opacity .3s}
+.screen[style*="min-height:0"]+.screen{min-height:0;padding-top:0}
+#card{min-height:100vh;display:flex;align-items:center;justify-content:center}
+#bcard{transform:rotate(-2deg) scale(.8);opacity:0;transition:all 1.2s cubic-bezier(.3,1.4,.5,1);background:#fffdf9;border-radius:20px;padding:36px 28px;box-shadow:0 18px 50px rgba(226,119,154,.2);max-width:440px;border:1px solid #fbe3ea;background-image:repeating-linear-gradient(transparent 0 35px,#fbe8ee 35px 36px)}
+#bcard.in{transform:rotate(-2deg) scale(1);opacity:1}
+#bcard .hand{font-family:"Kaiti SC","STKaiti","KaiTi","Xingkai SC","Klee","Comic Sans MS",cursive;font-size:22px;line-height:36px;color:#7a4a5c}
+@media(min-width:900px){main{padding:0 40px 20vh}.trio{grid-template-columns:1fr}}
+</style></head><body class="locked">
+<div class="blob" id="b1"></div><div class="blob" id="b2"></div><div class="blob" id="b3"></div>
+<div id="intro"><div id="glow"></div>
+<svg id="giftsvg" viewBox="0 0 200 200"><ellipse cx="100" cy="186" rx="60" ry="8" fill="#f3dbe3"/>
+<rect x="40" y="90" width="120" height="90" rx="14" fill="#fde3ea"/><rect x="92" y="90" width="16" height="90" fill="#f7a8c0"/>
+<g class="lidg"><rect x="30" y="66" width="140" height="30" rx="12" fill="#f9c6d5"/><rect x="92" y="66" width="16" height="30" fill="#e2779a"/></g>
+<g class="rib ribL"><path d="M100 66C70 30 50 50 70 66Z" fill="#e2779a"/></g><g class="rib ribR"><path d="M100 66C130 30 150 50 130 66Z" fill="#e2779a"/></g>
+<circle class="rib" cx="100" cy="64" r="8" fill="#d0628a"/></svg>
+<div id="tap">轻点礼盒 · 拆开礼物</div>
+<div id="wish"><h1>生日快乐<br>亲爱的妹妹 🎂</h1><p>往下滑，慢慢读 ↓</p></div></div>
+<button id="mute" aria-label="音乐开关">🔊</button>
+<main id="story"></main>
+<section id="card"><div id="bcard"><div class="hand">亲爱的妹妹：<br>二十二岁生日快乐 🎂<br>小猪存钱罐已经装满啦，<br>愿你一生可爱，一生富足。<br><div style="text-align:right">—— 爱你的哥哥</div></div></div></section>
+<!-- 正文：full_content.md 逐字原文 -->
+<script type="text/plain" id="content">
+# 妹妹，22岁生日快乐——这是一份教你「钱生钱」的礼物
+
+这份礼物不是裙子，不是口红，是一篇讲钱的文字。你可能觉得奇怪，生日送这个？先别急，听我说完。
+
+《小狗钱钱》里有个很简单的故事：那只叫钱钱的拉布拉多犬，教小女孩吉娅把钱分成三份——一份日常花销，一份用来实现梦想，一份变成「鹅」。鹅会下金蛋，但鹅不能杀，杀了一只鹅就没了金蛋。理财说白了就是养鹅：先攒本金，再让本金给你生钱。很多人每月工资花光光，等于亲手把鹅杀了吃肉。
+
+《纳瓦尔宝典》里有一句话我特别喜欢：**财富是你在睡觉的时候，还能帮你赚钱的资产。** 上班赚钱，是在用时间换钱；时间卖完了，收入就停了。而投资，是把你现在挣的钱，慢慢变成能自己产生现金流的资产。等这些资产产生的钱够你生活了，你就不用再为钱发愁，可以去做真正想做的事——这才是财务自由。
+
+学校不教这些。学校里教微积分、教文言文，就是不教怎么管钱。可等你出了校门，发现一辈子都要跟钱打交道：工资怎么花、房贷怎么还、以后孩子的教育金怎么准备、养老怎么办……没人替你打理。
+
+所以我写这篇东西给你。不指望你马上变成投资高手，只希望你能在22岁这年，把「钱生钱」这个道理想明白。早点明白，比赚多少钱都值。
+
+---
+
+## 一、先认识一下：市面上到底有哪些投资品种
+
+别被理财APP上五花八门的产品吓到，掰着手指头数，其实就五大类。
+
+**一、存款。** 你把钱放银行，银行付你利息。现在一年期定期存款利率大概1.5%左右。安全是真的安全，但钱会「缩水」——因为物价每年都在涨。你存1万块，一年后拿到10150块，可东西贵了3%，你实际购买力反而下降了。存钱只能保证不丢，不能保证不亏。
+
+**二、债券。** 债券就是你借钱给别人——借给国家叫国债，借给公司叫公司债。对方给你打一张欠条，到期还本付息。国债风险很低，收益也不高，比存款强一点点。公司债风险高一些、利息也高一些，但公司要是破产，钱可能打水漂。
+
+**三、股票。** 股票是买一家公司的股份，公司赚钱你能分红，股价涨了你卖掉能赚差价。但问题是：你怎么知道哪家公司能赚钱？A股几千家公司，有造假退市的、有业绩变脸的，别说普通人，专业基金经理也经常看走眼。买股票好比在几百个学生里猜谁能考清华，押中了发财，押错了伤筋动骨。
+
+**四、基金。** 基金是你把钱交给基金经理，他帮你买一堆股票和债券。相当于你出钱、他出专业能力。基金又分两类：一类叫主动基金，基金经理自己琢磨买什么，赌他水平高；另一类叫指数基金，不靠经理选股，按照一个早就定好的规则买。
+
+**五、ETF。** ETF是指数基金的一种，但它能像股票一样在股票账户里随时买卖。普通人买指数基金，最方便的就是买ETF。这个下面细说。
+
+这五大类里，前两类太保守，跑不赢通胀；第三类风险太大，普通人没本事挑个股；第四类费用高，还得赌经理的水平。所以普通人最适合的，是ETF。
+
+---
+
+## 二、为什么选ETF？——一个「打包」的思维
+
+想象一下，你想在美食城里入股最好吃的10家店。一家一家去谈，要跑10趟、签10份合同、投10笔钱，还得天天盯着每家的生意——这就是买股票。
+
+现在有人把这10家店打包成一个套餐，你买一份，就等于同时入股了10家店。这个套餐每天有价格，随时能买能卖——这就是ETF。
+
+ETF有四个实实在在的好处：
+
+- **省心**：不用研究个股。你看好中国消费，但不知道买茅台还是伊利，直接买个消费ETF，一篮子全包了。你看好科技，不用纠结苹果还是微软，纳指ETF帮你打包好了。
+- **不会死**：单一股票可能退市、造假，但你买的一篮子东西，个别公司出了问题，整体影响很小。何况指数还会定期调整成分股，把差公司踢出去，把好公司换进来。单棵树会枯，森林不会。
+- **便宜**：主动基金一年管理费普遍1.5%（不管赚不赚钱你都得交），ETF很多只要0.15%~0.5%。一年差一个多点，几十年复利下来差距吓死人。
+- **方便**：100块就能投，股票账户里输代码就能买，跟买股票一样快。部分跨境ETF还能当天买当天卖。
+
+一句话：ETF就是给普通人设计的「躺赢工具」——用最少的钱、最少的时间，拿市场平均回报。
+
+---
+
+## 三、ETF上千只，为什么就选纳指、标普、红利这三个？
+
+市面上的ETF多得数不清，消费、医药、半导体、军工、新能源……为什么我只给你挑这三个？因为它们分别代表三种完全不同的赚钱路子，组合在一起就是「进可攻、退可守」。
+
+### 纳指ETF——买「全球最能赚钱的科技公司」
+
+纳指全称纳斯达克100指数，跟踪的是在美国纳斯达克上市的100家最大的非金融公司：苹果、微软、谷歌、亚马逊、英伟达、特斯拉……你每天用的手机、看的视频、网购的网站，背后几乎都是这些公司。
+
+它们有个共同点：掌握全球最核心的技术，盈利能力强得离谱。过去几十年，中间虽然也经历过暴跌，但整体一直往上走。只要人类还在用手机、用互联网、用AI，这些公司大概率还会继续赚钱。
+
+买纳指，本质上是买「全球科技进步」这个大趋势，是跟最会赚钱的公司站在一起。
+
+### 标普500ETF——买「美国经济」本身
+
+标普500由美国500家最大的上市公司组成，覆盖美国股市约80%的市值，各行各业都有——科技、金融、医疗、消费、工业。它不押注任何一个行业，而是押注整个美国经济的长期向上。
+
+巴菲特有句名言：对普通人来说，最好的选择就是长期定投标普500指数。他遗嘱里写了，留给家人的钱，90%要买标普500。
+
+买标普500，等于让美国最优秀的500家大公司给你打工。省心到了极致。
+
+### 红利ETF——买「愿意给你分钱的铁公鸡」
+
+红利ETF专挑股息率高的股票——这些公司股价可能涨得没那么猛，但每年赚了钱，愿意拿出真金白银分给股东。
+
+你可以把它理解成一间收租的铺子：买下之后，每年都有分红进账，就像房东收房租。哪怕市场大跌、股价跌了，只要公司还在赚钱、还在分红，你每年依然有现金入账。
+
+A股经典的中证红利指数，选的是沪深两市股息率最高的100只股票，大多是银行、能源、交通运输这类盈利稳定的大公司。历史表现不输大部分指数，波动更小、更抗跌。
+
+### 为什么非要配一份红利？
+
+因为纳指和标普长期向上，但中间可能跌掉30%。你要是全仓它们，跌的时候心态可能崩了，一恐慌就卖在底部，后面涨上来又后悔。而红利类资产就像压舱石——市场差的时候它少跌一点、还给你分红。有了它，整个组合才拿得住。
+
+---
+
+## 四、为什么用定投，不一把梭？
+
+好，你已经知道买什么了。但还有个问题：一次全买，还是分批买？
+
+答案是：**分批买，每个月固定投一笔。这就是定投。**
+
+打个比方。你今天去菜市场买土豆，土豆今天10块钱一斤。你买不买？万一明天跌到5块呢？你不可能预知价格。但如果你每周都买100块钱土豆——有时候买贵了只能买10斤，有时候便宜能买20斤——时间长了，你的平均成本会被拉得很低。等土豆涨到15块，你就赚了。
+
+定投的本质，是承认自己猜不准市场。没有人能精准抄底，也没人能精准逃顶。既然猜不准，就用分批买入来摊平成本：市场跌的时候，同样的钱能买更多份额；市场涨的时候，你买得少。长期下来，你的平均成本一定不会是最高的。
+
+而且定投对心态特别友好。你一次性投10万，市场跌10%，亏1万，你可能晚上睡不着。但每月投1000块，市场跌了，你反而开心——因为买到更便宜的筹码了，以后涨起来赚更多。
+
+定投不需要技术，只需要纪律：每个月固定拿出一笔钱，固定买入，风雨无阻。
+
+---
+
+## 五、具体怎么做？手把手教程
+
+先回答一个关键问题：**买这三样，不一定要开证券账户。**
+
+支付宝、微众银行这些你手机里可能已经有的App，都能直接定投场外的纳指、标普和红利基金。而且说实话，最近一段时间，先别急着开证券账户去买场内的纳指ETF和标普500ETF——因为它们的溢价率比较高，在场内买等于买贵了。
+
+什么是溢价？简单说，场内ETF有两个价格：一个是它背后那篮子股票的真实价值（净值），一个是大家在交易所里买卖的价格。当想买的人太多、场内份额不够卖时，交易价格就会被推得比真实价值高，高出来的部分就叫溢价。纳指、标普这类跨境ETF，因为受QDII外汇额度限制，场外申购经常限购或暂停，想买的人涌到场内，溢价就被炒起来了。有的纳指ETF溢价曾经超过15%。如果你溢价买进去，万一哪天溢价消失，光这一块就可能亏掉好几个点。
+
+### 方式一：开证券账户，场内买ETF
+
+这个方式适合愿意开股票账户、觉得场内操作方便的人。
+
+1. **开户**：现在的券商APP都能在线开户，几分钟搞定。
+2. **定投金额**：月薪7000，建议每月700~1500元（10%~20%）。先把3~6个月生活费留作紧急备用金，再开始。
+3. **分配比例**：40%纳指、30%标普、30%红利。
+4. **买入动作**：每个月发工资后第二天，打开券商APP，输入代码买入。
+5. **止盈线**：总收益到50%~100%时，卖一部分落袋为安，然后继续定投。
+
+> ⚠️ **但是，在场内买纳指ETF、标普500ETF之前，一定先看一眼溢价率**——券商APP上一般都会显示。溢价超过1.5%就别买了，这时候钱被“贵”的部分吃掉了，不划算。遇到这种情况，就转到下面的方式二或方式三，去场外买。
+>
+> 红利ETF是A股资产，没有外汇额度问题，溢价风险很小，可以正常买。
+
+### 方式二：不开户，用支付宝定投（最省事，最推荐）
+
+1. 打开支付宝 → 点「理财」→ 点「基金」。
+2. 搜索“纳斯达克100”或“标普500”，会出现一批跟踪这两个指数的场外基金。
+3. **选C类份额**。这里解释一下：基金分A类和C类。A类买入时收申购费（虽然平台打折后不贵），C类买入时不收申购费，但每年收一点点销售服务费。定投是细水长流、金额不大，选C类通常更划算。你在产品页面上对比一下费率，哪个低选哪个就行。
+4. 点「定投」，设置金额（比如每月1000元）、周期（每周或每月都行）、扣款日期（建议设在发工资后第二天）。
+5. **分红方式选「红利再投资」**——分红不要取出来，让它继续买入基金份额，这样才能发挥复利的效果。
+6. 设置完就不用管了，支付宝每月自动扣款。
+
+> ✅ **关键好处**：场外基金是按净值成交的，不存在场内那种溢价问题，你每一分钱都花在“真实价值”上。
+
+### 方式三：不开户，用微众银行定投
+
+如果你习惯用微众银行，操作逻辑和支付宝几乎一样：
+
+1. 打开微众银行APP → 点「理财」→ 点「基金」。
+2. 搜索“纳斯达克100”或“标普500”，找到对应的场外基金。
+3. 同样选C类份额，点「定投」，设置金额、周期、扣款日期。
+4. 分红方式选「红利再投资」。
+
+微众银行是银行背景，基金申购费同样有折扣，买入和赎回的规则跟支付宝一致，按净值成交，也没有溢价问题。
+
+### 补充几点
+
+- **红利基金场外也能买。** 就算不开证券账户，在支付宝或微众银行搜索“中证红利”或“红利低波”，也能找到对应的场外指数基金，按同样方式定投。也就是说，不开户也能把40%纳指、30%标普、30%红利的配置完整落地。
+- **QDII基金可能会限购。** 有时会遇到“暂停申购”或“单日限购”的提示，这是外汇额度原因，不是基金出问题了。遇到限购，可以先买额度没满的那只，或等开放后再买，不用慌。
+- **场外申购费很低。** 支付宝、微众银行这类平台买场外基金，申购费普遍打1折，大约0.1%~0.15%，成本几乎可以忽略。
+
+**最终建议：首选支付宝或微众银行做场外定投，省心、无溢价、门槛低，100块就能开始。** 如果以后想玩场内、愿意开户，再配一个证券账户，注意避开高溢价的纳指和标普ETF就行。红利ETF场内场外都可以，看哪个方便。
+
+---
+
+## 六、三针心理预防针
+
+最后，提前给你打个思想底子。投资到最后，拼的不是脑子，是心态。
+
+**第一针：别追涨杀跌。** 90%的人亏钱就是因为这个。看到大涨忍不住冲进去，买在高位；看到自己的跌了就恐慌卖出，卖在底部。记住一句话：别人贪婪时我恐惧，别人恐惧时我贪婪。如果你做不到逆向操作，至少做到「涨了拿得住，跌了敢加仓」。
+
+**第二针：别把所有钱都投进去。** 投资是为了让生活更好，不是更焦虑。永远留足应急钱，只用闲钱投资——就是三五年内用不到的钱。22岁的你最大的优势是时间：就算市场跌了，你有足够时间等它涨回来。时间是复利的朋友。
+
+**第三针：别听「内幕消息」。** 亲戚朋友推荐你买什么股票，一律不听。普通人最大的优势不是信息多，恰恰是承认自己没信息优势。买指数，就是承认自己不可能每次都能选中最好的股票，但愿意拿市场平均回报——而仅仅是这个平均回报，已经能跑赢大多数人。
+
+---
+
+## 写在最后
+
+妹妹，22岁是个神奇的年纪。你每月拿出1000块定投，可能只是少买几件衣服、少喝几杯奶茶。但坚持到50岁，按年化8%~10%算，大概率能攒下一笔改变人生的钱。
+
+真正的财富自由，不是账户数字有多大，而是被动收入能覆盖生活支出。你不需要成为投资天才，只需要做时间的朋友，让复利为你工作。
+
+这三只ETF——纳指、标普500、红利——不是一个一夜暴富的方案，而是一套慢慢变富的框架。它不一定最赚钱，但它能让一个22岁、月薪7000的普通女孩，在完全不焦虑、不折腾、不影响正常生活的前提下，稳稳地走上财富积累的路。
+
+吹蜡烛的时候，许个愿：希望十年后的你，感谢今天开始定投的自己。
+
+生日快乐，妹妹。愿你一生可爱，一生富足。
+
+2026年10月15日
+
+---
+
+## 附：快速记忆卡片
+
+| 品种 | 一句话逻辑 | 场内代码参考 | 场外怎么买 |
+|------|-----------|------------|-----------|
+| 纳指ETF | 全球最牛的科技公司 | 513100 | 支付宝/微众搜“纳斯达克100”，选C类 |
+| 标普500ETF | 美国经济整体 | 513500 | 支付宝/微众搜“标普500”，选C类 |
+| 红利ETF | 高分红、收租型资产 | 510880 | 支付宝/微众搜“中证红利”或“红利低波” |
+
+**每月动作**：定额（如1000元）→ 按40/30/30分配 → 发工资就买 → 不看盘，坚持三五年以上。
+</script>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const inl=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+/* ---- SVG 插画 ---- */
+const SV=(b,vb='0 0 200 160')=>`<svg viewBox="${vb}">${b}</svg>`;
+const ART={
+goose:SV('<ellipse cx="100" cy="150" rx="70" ry="6" fill="#f6e3ea"/><ellipse cx="92" cy="104" rx="52" ry="34" fill="#fff" stroke="#f7a8c0" stroke-width="4"/><path d="M128 88c10-30 6-50 20-52 12 0 14 12 8 18" fill="#fff" stroke="#f7a8c0" stroke-width="4"/><path d="M156 52l14 4-14 5z" fill="#ffb27a"/><circle cx="150" cy="46" r="3" fill="#4a3a42"/><circle cx="144" cy="54" r="4" fill="#ffc7d6"/><ellipse cx="62" cy="142" rx="13" ry="10" fill="#ffd36e"/><ellipse cx="36" cy="140" rx="10" ry="8" fill="#ffe08f"/><path d="M58 98q20 14 44 0" stroke="#f7a8c0" stroke-width="3" fill="none"/>'),
+book:SV('<path d="M30 40q35-14 70 0v96q-35-14-70 0z" fill="#fde3ea"/><path d="M170 40q-35-14-70 0v96q35-14 70 0z" fill="#ece6ff"/><path d="M100 40v96" stroke="#e2779a" stroke-width="3"/><circle cx="150" cy="30" r="12" fill="#ffd36e"/><text x="150" y="35" font-size="13" text-anchor="middle" fill="#a0702a">¥</text>'),
+moon:SV('<circle cx="100" cy="80" r="46" fill="#ece6ff"/><circle cx="120" cy="66" r="40" fill="#fffaf6"/><text x="56" y="40" font-size="18" fill="#f7a8c0">✦</text><text x="150" y="120" font-size="14" fill="#ffb27a">✦</text><text x="70" y="140" font-size="20">💤</text><circle cx="140" cy="38" r="9" fill="#ffd36e"/>'),
+school:SV('<rect x="50" y="60" width="100" height="70" rx="8" fill="#fde3ea"/><path d="M40 64l60-34 60 34z" fill="#f7a8c0"/><rect x="88" y="96" width="24" height="34" rx="4" fill="#fff"/><text x="100" y="56" font-size="12" text-anchor="middle" fill="#fff">∫ dx</text>'),
+heart:SV('<path d="M100 140C30 96 40 40 76 40c14 0 22 10 24 18 2-8 10-18 24-18 36 0 46 56-24 100z" fill="#f9c6d5"/><text x="100" y="98" font-size="26" text-anchor="middle">🌱</text>'),
+pkg:SV('<path d="M40 64h120l-14 72H54z" fill="#fde3ea" stroke="#f7a8c0" stroke-width="3"/><path d="M48 64q52-50 104 0" fill="none" stroke="#e2779a" stroke-width="5"/><text x="100" y="110" font-size="16" text-anchor="middle" fill="#e2779a" font-weight="800">10 in 1</text>'),
+shield:SV('<path d="M100 22l52 18v34c0 34-24 54-52 64-28-10-52-30-52-64V40z" fill="#fde3ea" stroke="#e2779a" stroke-width="4"/><path d="M78 80l16 16 30-32" stroke="#e2779a" stroke-width="7" fill="none" stroke-linecap="round"/>'),
+potato:SV('<ellipse cx="70" cy="100" rx="30" ry="24" fill="#f2cf98"/><ellipse cx="128" cy="104" rx="26" ry="20" fill="#e8bd7c"/><circle cx="62" cy="94" r="2" fill="#b68a4c"/><circle cx="80" cy="106" r="2" fill="#b68a4c"/><path d="M20 50l40-10 30 14 40-24 50 6" stroke="#f7a8c0" stroke-width="4" fill="none"/><text x="160" y="140" font-size="22">🧺</text>'),
+phone:SV('<rect x="66" y="14" width="68" height="132" rx="16" fill="#fff" stroke="#e2779a" stroke-width="4"/><rect x="76" y="32" width="48" height="74" rx="8" fill="#fde3ea"/><path d="M82 92l10-14 10 8 14-22" stroke="#e2779a" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="100" cy="126" r="7" fill="#f7a8c0"/>'),
+vaccine:SV('<g transform="rotate(-35 100 80)"><rect x="60" y="66" width="80" height="28" rx="10" fill="#ece6ff" stroke="#b58cf0" stroke-width="3"/><rect x="140" y="74" width="26" height="12" fill="#b58cf0"/><rect x="34" y="76" width="26" height="8" fill="#ccc"/><rect x="70" y="72" width="40" height="16" rx="5" fill="#f7a8c0"/></g><text x="150" y="140" font-size="22">💪</text>'),
+cake:SV('<rect x="50" y="86" width="100" height="50" rx="10" fill="#fde3ea"/><rect x="62" y="60" width="76" height="30" rx="8" fill="#ffe1cf"/><path d="M50 100q12 10 25 0t25 0 25 0 25 0" stroke="#fff" stroke-width="5" fill="none"/><rect x="96" y="36" width="8" height="24" fill="#d8ccff"/><path d="M100 22q-6 8 0 14 6-6 0-14" fill="#ffb27a"/>'),
+cards:SV('<rect x="34" y="34" width="132" height="96" rx="14" fill="#fff" stroke="#f7a8c0" stroke-width="3"/><path d="M34 60h132M78 34v96M122 34v96" stroke="#fbe3ea" stroke-width="3"/><circle cx="56" cy="47" r="6" fill="#d8ccff"/><circle cx="100" cy="47" r="6" fill="#ffe1cf"/><circle cx="144" cy="47" r="6" fill="#f9c6d5"/>')};
+const MASCOT={
+'纳指':SV('<circle cx="40" cy="44" r="28" fill="#ece6ff"/><rect x="24" y="30" width="32" height="22" rx="5" fill="#fff" stroke="#b58cf0" stroke-width="3"/><circle cx="34" cy="41" r="3" fill="#4a3a42"/><circle cx="46" cy="41" r="3" fill="#4a3a42"/><path d="M36 47q4 3 8 0" stroke="#e2779a" stroke-width="2" fill="none"/><path d="M40 16v8M36 14h8" stroke="#b58cf0" stroke-width="3"/><circle cx="40" cy="13" r="3" fill="#f7a8c0"/>','0 0 80 80'),
+'标普':SV('<circle cx="40" cy="44" r="28" fill="#ffe1cf"/><path d="M18 44a22 22 0 0144 0" fill="#fff" stroke="#ffb27a" stroke-width="3"/><path d="M40 22v44M20 40h40" stroke="#ffb27a" stroke-width="2"/><circle cx="32" cy="54" r="3" fill="#4a3a42"/><circle cx="48" cy="54" r="3" fill="#4a3a42"/><path d="M36 60q4 3 8 0" stroke="#e2779a" stroke-width="2" fill="none"/><text x="58" y="20" font-size="14">500</text>','0 0 80 80'),
+'红利':SV('<path d="M14 40l26-20 26 20v28H14z" fill="#fde3ea" stroke="#e2779a" stroke-width="3"/><rect x="33" y="48" width="14" height="20" rx="3" fill="#fff"/><circle cx="30" cy="40" r="3" fill="#4a3a42"/><circle cx="50" cy="40" r="3" fill="#4a3a42"/><circle cx="64" cy="22" r="9" fill="#ffd36e"/><text x="64" y="26" font-size="10" text-anchor="middle" fill="#a0702a">¥</text>','0 0 80 80')};
+const PIG=`<svg id="pig" viewBox="0 0 200 180" style="width:min(46vw,190px)"><defs><clipPath id="pc"><ellipse cx="100" cy="112" rx="70" ry="52"/></clipPath></defs>
+<g id="coins"></g><ellipse cx="100" cy="112" rx="70" ry="52" fill="#fde3ea" stroke="#f7a8c0" stroke-width="4"/>
+<rect id="fill" x="30" y="164" width="140" height="0" fill="#ffd36e" opacity=".55" clip-path="url(#pc)"/>
+<rect x="84" y="60" width="32" height="7" rx="3" fill="#e2779a"/><ellipse cx="166" cy="112" rx="14" ry="12" fill="#f9c6d5"/><circle cx="162" cy="110" r="2.5" fill="#d0628a"/><circle cx="170" cy="110" r="2.5" fill="#d0628a"/><circle cx="140" cy="94" r="4" fill="#4a3a42"/><path d="M60 66l-8-16 22 8z" fill="#f9c6d5"/><rect x="60" y="154" width="14" height="18" rx="5" fill="#f7a8c0"/><rect x="126" y="154" width="14" height="18" rx="5" fill="#f7a8c0"/><path d="M30 104q-14-4-10 10" stroke="#f7a8c0" stroke-width="3" fill="none"/><text id="pigt" x="100" y="120" font-size="16" text-anchor="middle" fill="#e2779a" font-weight="800"></text></svg>`;
+/* 每节插画（按标题匹配） */
+const SEC_ART=[['妹妹',null],['一、','book'],['二、','pkg'],['三、',null],['四、','potato'],['五、','phone'],['六、','vaccine'],['写在最后','cake'],['附：','cards']];
+const PARA_ART=[['《小狗钱钱》','goose'],['《纳瓦尔宝典》','moon'],['学校不教','school'],['所以我写','heart'],['ETF有四个','shield']];
+/* ---- 解析 Markdown 为屏 ---- */
+const md=$('#content').textContent.trim().split('\n');
+const story=$('#story');let html='',buf=[],list=null,q=[],tb=[],chap=0,inCandy=false,candy='';
+const CANDY_C=['#eef6ff','#f3efff','#fff0f4','#fff4ea','#fdf0ff'],CANDY_I=['🏦','📜','📈','🧺','🍬'];let ci=0;
+function block(h){html+=`<section class="screen"><div class="r">${h}</div></section>`}
+function flushList(){if(list){block('<div class="glass"><'+list+'>'+buf.join('')+'</'+list+'></div>');buf=[];list=null}
+ if(q.length){block('<div class="glass">'+q.filter(Boolean).map(x=>'<p>'+inl(x)+'</p>').join('')+'</div>');q=[]}
+ if(tb.length){block('<div class="glass tw"><table>'+tb.filter(r=>!/^\|[-| ]+\|$/.test(r)).map((r,k)=>'<tr>'+r.replace(/^\||\|$/g,'').split('|').map(c=>(k?'<td>':'<th>')+inl(c.trim())+(k?'</td>':'</th>')).join('')+'</tr>').join('')+'</table></div>');tb=[]}}
+for(const raw of md){const l=raw.trim();let m;
+ if(inCandy&&!/^\*\*[一二三四五]、/.test(l)&&l){ if(candy){candy+='</div></div>';html+=candy;candy=''} html+='</div></div></section>';inCandy=false}
+ if(l.startsWith('>')){q.push(l.replace(/^>\s?/,''));continue}
+ if(l.startsWith('|')){tb.push(l);continue}
+ if((m=l.match(/^\d+\.\s(.*)/))){if(list!=='ol')flushList();list='ol';buf.push('<li>'+inl(m[1])+'</li>');continue}
+ if(l.startsWith('- ')){if(list!=='ul')flushList();list='ul';buf.push('<li>'+inl(l.slice(2))+'</li>');continue}
+ flushList();if(!l||l==='---')continue;
+ if((m=l.match(/^(#{1,3})\s(.*)/))){const t=m[2];
+   if(m[1]==='#'){html+=`<section class="screen chap"><div class="r ill" data-p=".15">${ART.cake}</div><h1 class="t r">${inl(t)}</h1></section>`;continue}
+   if(m[1]==='##'){const a=SEC_ART.find(s=>t.startsWith(s[0]));const parts=t.match(/^(.+?、)(.*)$/);
+     html+=`<section class="screen chap"><div class="r ill" data-p=".2">${a&&a[1]?ART[a[1]]:''}</div><h2 class="r">${parts?'<span class="no" style="display:block;font-size:.5em;color:var(--rose)">'+inl(parts[1])+'</span>'+inl(parts[2]):inl(t)}</h2></section>`;
+     if(t.startsWith('四、'))html+=`<div id="pigwrap">${PIG}</div>`;continue}
+   const mk=Object.keys(MASCOT).find(k=>t.startsWith(k));
+   block(mk?`<div class="mascot">${MASCOT[mk]}<h3 style="margin:0">${inl(t)}</h3></div>`:`<h3>${inl(t)}</h3>`);continue}
+ /* 投资品种糖果卡 */
+ if((m=l.match(/^\*\*([一二三四五]、)(.+?)。\*\*\s(.*)$/))){
+   if(!inCandy){html+='<section class="screen"><div class="r"><p class="tapme" style="margin:0 0 12px">🍬 点开每一颗糖果看看</p><div class="candies">';inCandy=true}
+   html+=`<div class="candy" style="background:${CANDY_C[ci]}" onclick="this.classList.toggle('on')"><div class="ic">${CANDY_I[ci++]}</div><div class="nm">${esc(m[1])}${esc(m[2])}。</div><div class="bd"><p>${inl(m[3])}</p></div><div class="hint">点我打开</div></div>`;continue}
+ const pa=PARA_ART.find(s=>l.startsWith(s[0]));
+ if(l.startsWith('现在有人把这10家店打包'))html+=`<section class="screen"><div class="r ill" data-p=".1">${BASKET()}</div><p class="tapme r">🧺 点一下果篮</p></section>`;
+ if(pa)html+=`<section class="screen" style="min-height:0;padding:4vh 0 0"><div class="r ill" data-p=".18">${ART[pa[1]]}</div></section>`;
+ block('<p>'+inl(l)+'</p>');
+ if(l.startsWith('答案是：分批买'))html+='<div class="coinmark"></div>';
+}
+flushList();
+function BASKET(){let f='';const fr=[['#ff8fa8',60,62],['#ffb27a',84,54],['#c9a8ff',108,60],['#ffd36e',132,54],['#9ed9a8',72,44],['#f7a8c0',96,40],['#ffcfb3',120,44],['#b58cf0',144,62],['#ff8fa8',48,52],['#ffd36e',156,48]];
+ fr.forEach(([c,x,y],i)=>{const a=(i/fr.length)*Math.PI*2;f+=`<circle class="fruit" data-dx="${Math.cos(a)*70|0}" data-dy="${Math.sin(a)*50-30|0}" cx="${x}" cy="${y}" r="13" fill="${c}"/>`});
+ return `<svg id="basket" viewBox="-30 -50 260 220">${f}<path d="M30 66h140l-16 76H46z" fill="#fff1e6" stroke="#ffb27a" stroke-width="4"/><path d="M40 86h120M44 106h112M48 126h104" stroke="#ffd9bf" stroke-width="3"/><path d="M50 66q50-60 100 0" fill="none" stroke="#ffb27a" stroke-width="5"/><text x="100" y="118" text-anchor="middle" font-weight="800" fill="#e2779a" font-size="18">ETF</text></svg>`}
+story.innerHTML=html;
+/* 果篮交互 */
+const bk=$('#basket');if(bk)bk.onclick=()=>{bk.classList.toggle('x');bk.querySelectorAll('.fruit').forEach(f=>f.style.transform=bk.classList.contains('x')?`translate(${f.dataset.dx}px,${f.dataset.dy}px)`:'')};
+/* 逐行淡入 */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.r').forEach(el=>{const ps=el.querySelectorAll(':scope>.glass>ol>li,:scope>.glass>ul>li');ps.forEach((li,i)=>{li.classList.add('r');li.style.transitionDelay=i*.12+'s';io.observe(li)});io.observe(el)});
+/* 视差 + 小猪存钱罐 */
+const ills=[...document.querySelectorAll('.ill')],blobs=[b1,b2,b3];
+const pw=$('#pigwrap'),coinsG=$('#coins'),fillR=$('#fill'),pigt=$('#pigt');let dropped=0,full=false;
+const pigStart=pw?pw.offsetTop:0,pigEnd=document.getElementById('card').offsetTop;
+function dropCoin(){const c=document.createElementNS('http://www.w3.org/2000/svg','g');c.innerHTML='<circle r="10" fill="#ffd36e" stroke="#e8b24a" stroke-width="2"/><text y="4" font-size="10" text-anchor="middle" fill="#a0702a">¥</text>';c.setAttribute('class','coin');c.style.transform='translate(100px,0px)';coinsG.appendChild(c);requestAnimationFrame(()=>requestAnimationFrame(()=>{c.style.transform='translate(100px,66px)';setTimeout(()=>c.style.opacity=0,550)}));plink(880+dropped*20,.08)}
+let tick=false;addEventListener('scroll',()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{tick=false;const y=scrollY,h=innerHeight;
+ ills.forEach(el=>{const r=el.getBoundingClientRect();const off=(r.top+r.height/2-h/2)*(+el.dataset.p||.15);el.style.transform=`translateY(${Math.max(-30,Math.min(30,off*-0.4))}px)`});
+ blobs.forEach((b,i)=>b.style.transform=`translateY(${y*(i+1)*-.03}px)`);
+ if(pw){const prog=Math.max(0,Math.min(1,(y+h*.5-pigStart)/(pigEnd-pigStart)));const want=Math.floor(prog*20);
+  while(dropped<want){dropCoin();dropped++}fillR.setAttribute('height',prog*104);fillR.setAttribute('y',164-prog*104);pigt.textContent=dropped?('×'+dropped):'';
+  if(prog>=.98&&!full){full=true;ding();$('#bcard').classList.add('in')}}});},{passive:true});
+const cio=new IntersectionObserver(e=>{if(e[0].isIntersecting&&!full){full=true;fillR.setAttribute('height',104);fillR.setAttribute('y',60);ding();$('#bcard').classList.add('in')}},{threshold:.5});cio.observe($('#card'));
+/* 音乐（WebAudio 合成音乐盒） */
+let ctx,master,on=true;
+function note(m,t,d,v,type='sine'){const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.value=440*Math.pow(2,(m-69)/12);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(master);o.start(t);o.stop(t+d+.1)}
+function plink(f,v){if(!ctx)return;const m=69+12*Math.log2(f/440);note(m,ctx.currentTime,.4,v,'triangle')}
+function ding(){if(!ctx)return;const t=ctx.currentTime;[84,88,91,96].forEach((m,i)=>note(m,t+i*.12,1.6,.22))}
+function startMusic(){ctx=new (window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=.16;master.connect(ctx.destination);
+ const prog=[[60,64,67,71],[57,60,64,67],[53,57,60,64],[55,59,62,67]];let s=0;
+ const bar=()=>{const t=ctx.currentTime+.05,c=prog[s++%4];note(c[0]-12,t,3.8,.25);[0,1,2,3,2,1,0,2].forEach((k,i)=>note(c[k]+12,t+i*.5,1.6,.12))};bar();setInterval(bar,4000)}
+$('#mute').onclick=()=>{on=!on;master.gain.setTargetAtTime(on?.16:0,ctx.currentTime,.1);$('#mute').textContent=on?'🔊':'🔇'};
+$('#giftsvg').onclick=()=>{const I=$('#intro');if(I.classList.contains('open'))return;I.classList.add('open');try{startMusic();$('#mute').style.display='block'}catch(e){}
+ setTimeout(()=>{I.classList.add('gone');document.body.classList.remove('locked')},3200)};
+</script></body></html>
